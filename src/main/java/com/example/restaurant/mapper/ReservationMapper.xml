@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.restaurant.mapper.ReservationMapper">
+	<select id="selectRoom" resultType="com.example.restaurant.domain.RoomDomain">
+		SELECT room_no AS roomNo, room_name AS roomName, room_limit AS roomLimit
+		FROM room
+	</select>
+	
+	<select id="emptyRoom" parameterType="String" resultType="com.example.restaurant.dto.RoomDto">
+		SELECT r.room_no AS roomNo, r.room_name AS roomName, r.room_limit AS roomLimit,
+		CASE 
+        	WHEN res.room_no IS NOT NULL THEN 1
+        	ELSE 0
+    		END AS reservationStatus
+		FROM room r LEFT OUTER JOIN (
+			SELECT room_no 
+			FROM reservation 
+			WHERE reservation_date = #{date}
+			AND reservation_option = #{time}
+		) res ON r.room_no = res.room_no
+	</select>
+	
+	<select id="roomLimit" parameterType="Integer" resultType="Integer">
+		SELECT room_limit AS roomLimit
+		FROM room
+		WHERE room_no = #{roomNo}
+	</select>
+	
+	<insert id="reserveRoom" parameterType="com.example.restaurant.dto.ReservationDto">
+		INSERT INTO reservation 
+			(room_no, 
+			reservation_date, 
+			reservation_option, 
+			reservation_id, 
+			reservation_count, 
+			provider)
+		VALUES
+			(#{roomNo},
+			#{reservationDate},
+			#{reservationOption},
+			#{reservationId},
+			#{reservationCount},
+			#{provider}
+			)
+	</insert>
+	
+	<select id="findByReservationId" parameterType="String" resultType="com.example.restaurant.dto.ReservationDto">
+	    SELECT room_no AS roomNo, reservation_date AS reservationDate, reservation_option AS reservationOption,
+	    reservation_count AS reservationCount, provider AS provider
+	    FROM reservation
+	    WHERE reservation_id = #{reservationId}
+	    ORDER BY reservation_date DESC, createdate DESC
+	</select>
+	
+</mapper>
