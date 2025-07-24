@@ -23,4 +23,7 @@ public interface ReservationMapper {
 	
 	// 내 예약조회
 	List<ReservationDto> findByReservationId(String reservationId);
+	
+	// 예약 취소
+	int cancelReserve(int reservationNo);
 }

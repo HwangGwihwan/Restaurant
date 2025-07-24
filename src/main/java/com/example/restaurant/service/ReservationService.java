@@ -40,4 +40,9 @@ public class ReservationService {
 	public List<ReservationDto> myReservations(String reservationId) {
 	    return reservationMapper.findByReservationId(reservationId);
 	}
+	
+	// 예약 취소
+	public int cancelReserve(int reservationNo) {
+		return reservationMapper.cancelReserve(reservationNo);
+	}
 }

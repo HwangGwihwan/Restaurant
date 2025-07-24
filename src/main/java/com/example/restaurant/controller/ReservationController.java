@@ -114,4 +114,10 @@ public class ReservationController {
 	    
 		return "myReserve";
 	}
+	
+	@GetMapping("/cancelReserve")
+	public String cancelReserve(@RequestParam int reservationNo) {
+		reservationService.cancelReserve(reservationNo);
+		return "redirect:";
+	}
 }

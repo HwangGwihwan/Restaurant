@@ -45,11 +45,16 @@
 	</insert>
 	
 	<select id="findByReservationId" parameterType="String" resultType="com.example.restaurant.dto.ReservationDto">
-	    SELECT room_no AS roomNo, reservation_date AS reservationDate, reservation_option AS reservationOption,
-	    reservation_count AS reservationCount, provider AS provider
+	    SELECT reservation_no AS reservationNo, room_no AS roomNo, reservation_date AS reservationDate,
+	    reservation_option AS reservationOption, reservation_count AS reservationCount, provider AS provider
 	    FROM reservation
 	    WHERE reservation_id = #{reservationId}
 	    ORDER BY reservation_date DESC, createdate DESC
 	</select>
+	
+	<delete id="cancelReserve" parameterType="Integer">
+		DELETE FROM reservation
+		WHERE reservation_no = #{reservationNo}
+	</delete>
 	
 </mapper>

@@ -79,6 +79,7 @@
 	            <th>시간</th>
 	            <th>인원수</th>
 	            <th>플랫폼</th>
+	            <th>예약취소</th>
 	        </tr>
 	        </thead>
 	        <tbody>
@@ -89,6 +90,7 @@
 	                <td>${r.reservationOption}</td>
 	                <td>${r.reservationCount}</td>
 	                <td>${r.provider}</td>
+	                <td><a href="/cancelReserve?reservationNo=${r.reservationNo}">예약취소</a></td>
 	            </tr>
 	        </c:forEach>
 	        </tbody>
